@@ -1,5 +1,6 @@
 package com.sharingAPI.sharing.user;
 
+import com.sharingAPI.sharing.toke.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,13 +25,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     private String firstname;
     private String city;
 
     @Column(unique = true)
     private String email;
-
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -38,8 +37,8 @@ public class User implements UserDetails {
     @Column
     private LocalDateTime verified;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Token> tokens;
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
 
 
