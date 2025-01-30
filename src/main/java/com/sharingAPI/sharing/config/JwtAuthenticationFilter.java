@@ -1,5 +1,6 @@
 package com.sharingAPI.sharing.config;
 
+import com.sharingAPI.sharing.config.service.JwtService;
 import com.sharingAPI.sharing.toke.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

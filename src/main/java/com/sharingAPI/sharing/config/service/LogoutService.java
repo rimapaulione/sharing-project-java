@@ -1,4 +1,4 @@
-package com.sharingAPI.sharing.config;
+package com.sharingAPI.sharing.config.service;
 
 import com.sharingAPI.sharing.toke.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;

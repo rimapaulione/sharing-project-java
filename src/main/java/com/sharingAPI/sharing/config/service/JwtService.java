@@ -1,4 +1,4 @@
-package com.sharingAPI.sharing.config;
+package com.sharingAPI.sharing.config.service;
 
 
 import io.jsonwebtoken.Claims;
