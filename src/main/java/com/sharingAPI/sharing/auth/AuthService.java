@@ -1,9 +1,10 @@
 package com.sharingAPI.sharing.auth;
 
-
 import com.sharingAPI.sharing.user.Role;
 import com.sharingAPI.sharing.user.User;
 import com.sharingAPI.sharing.user.UserRepository;
+import com.sharingAPI.sharing.verification.VerificationToken;
+import com.sharingAPI.sharing.verification.VerificationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final VerificationTokenService verificationTokenService;
 
 
 
@@ -32,10 +33,10 @@ public class AuthService {
                 .verified(null)
                 .build();
 
-             userRepository.save(user);
+        var savedUser =userRepository.save(user);
 
-//        VerificationToken verificationToken = verificationTokenService
-//                .createVerificationToken(savedUser.getEmail());
+        VerificationToken verificationToken = verificationTokenService
+                .createVerificationToken(savedUser.getEmail());
 
         return RegisterResponse.builder()
                 .id(user.getId())
@@ -44,7 +45,7 @@ public class AuthService {
                 .email(user.getEmail())
                 .token(null)
                 .role(user.getRole())
-                .verification(null)  //verificationToken.getToken()
+                .verification(verificationToken.getToken())
                 .build();
     }
 

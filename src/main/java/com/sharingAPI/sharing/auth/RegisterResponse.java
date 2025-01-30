@@ -19,5 +19,5 @@ import java.util.UUID;
         private String city;
         private String email;
         private Role role;
-        private UUID verification;
+        private String verification;
     }
