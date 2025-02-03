@@ -56,7 +56,7 @@ public class AuthService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthResponse authenticate(AuthRequest request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -78,7 +78,7 @@ public class AuthService {
         var jwtToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
+        return AuthResponse.builder()
                 .id(user.getId())
                 .firstname(user.getFirstname())
                 .city(user.getCity())
@@ -114,12 +114,11 @@ public class AuthService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-//    public LoginResponse login(LoginRequest request) {
-//        var user = userRepository.findByEmail(request.getEmail())
-//                .orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
-//        return LoginResponse.builder().verified(user.getVerified()).build();
-//    }
-
+    public LoginResponse login(LoginRequest request) {
+        var user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("User does not exist"));
+        return LoginResponse.builder().verified(user.getVerified()).build();
+    }
 
 
 }

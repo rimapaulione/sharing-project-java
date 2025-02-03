@@ -17,8 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Service
 public class JwtService {
 
-//    @Value("${application.security.jwt.secret-key}")
-//    private String secretKey;
+
 
     private static final String secretKey = "8d03b459448ffe783c96242a2e3e3872ff21e6cf08dd21475b712fa174864718";
 
