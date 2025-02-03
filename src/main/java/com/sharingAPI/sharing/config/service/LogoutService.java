@@ -1,6 +1,6 @@
 package com.sharingAPI.sharing.config.service;
 
-import com.sharingAPI.sharing.toke.TokenRepository;
+import com.sharingAPI.sharing.token.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

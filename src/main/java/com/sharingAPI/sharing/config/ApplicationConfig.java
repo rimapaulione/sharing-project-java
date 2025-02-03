@@ -1,5 +1,6 @@
 package com.sharingAPI.sharing.config;
 
+import com.sharingAPI.sharing.auth.CustomAuthenticationEntryPoint;
 import com.sharingAPI.sharing.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 @Configuration
 @RequiredArgsConstructor
@@ -39,4 +41,5 @@ public class ApplicationConfig {
             throws Exception {
         return config.getAuthenticationManager();
     }
+
 }

@@ -1,6 +1,5 @@
 package com.sharingAPI.sharing.config.service;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,16 +7,21 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = System.getenv("JWT_SECRET_KEY");
+
+//    @Value("${application.security.jwt.secret-key}")
+//    private String secretKey;
+
+    private static final String secretKey = "8d03b459448ffe783c96242a2e3e3872ff21e6cf08dd21475b712fa174864718";
+
 
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
@@ -68,7 +72,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBites = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBites = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBites);
     }
 }

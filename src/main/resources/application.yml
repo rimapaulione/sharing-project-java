@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: sharing
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: ${POSTGRES_USER:postgres}
@@ -9,9 +7,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+  application:
+    name: sharing
+    security:
+      jwt:
+        secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+        expiration: 86400000

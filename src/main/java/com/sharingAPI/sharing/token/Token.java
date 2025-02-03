@@ -1,4 +1,4 @@
-package com.sharingAPI.sharing.toke;
+package com.sharingAPI.sharing.token;
 
 import com.sharingAPI.sharing.user.User;
 import jakarta.persistence.*;
