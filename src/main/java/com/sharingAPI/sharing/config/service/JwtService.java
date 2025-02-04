@@ -4,25 +4,36 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 @Service
 public class JwtService {
+    private String secretKey = "";
 
-
-
-    private static final String secretKey = "8d03b459448ffe783c96242a2e3e3872ff21e6cf08dd21475b712fa174864718";
+    public JwtService() {
+        try {
+            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
+            SecretKey sk = keyGen.generateKey();
+            secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException();
+        }
+    }
 
 
     public String generateToken(UserDetails userDetails) {
@@ -47,6 +58,7 @@ public class JwtService {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
+
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
@@ -54,6 +66,7 @@ public class JwtService {
     public String extractUsername(String jwtToken) {
         return extractClaim(jwtToken, Claims::getSubject);
     }
+
     private Date extractExpiration(String jwtToken) {
         return extractClaim(jwtToken, Claims::getExpiration);
     }
@@ -72,10 +85,10 @@ public class JwtService {
     }
 
     private SecretKey getSignInKey() {
-        byte[] keyBites = Base64.getDecoder()
-                .decode(secretKey);
-        return new SecretKeySpec(keyBites, "HmacSHA256"); }
+        byte[] keyBites = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBites);
     }
+}
 
 
 
