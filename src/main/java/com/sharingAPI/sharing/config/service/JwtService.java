@@ -7,6 +7,8 @@ import io.jsonwebtoken.io.Decoders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +72,8 @@ public class JwtService {
     }
 
     private SecretKey getSignInKey() {
-        byte[] keyBites = Decoders.BASE64.decode(secretKey);
+        byte[] keyBites = Base64.getDecoder()
+                .decode(secretKey);
         return new SecretKeySpec(keyBites, "HmacSHA256"); }
     }
 
