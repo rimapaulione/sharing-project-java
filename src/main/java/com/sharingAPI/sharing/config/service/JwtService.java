@@ -4,15 +4,16 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import java.security.Key;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import org.springframework.beans.factory.annotation.Value;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 @Service
 public class JwtService {
@@ -32,11 +33,11 @@ public class JwtService {
             UserDetails userDetails) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 1))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .claims(extraClaims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
+                .signWith(getSignInKey())
                 .compact();
     }
 
@@ -60,19 +61,19 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-
-    private Claims extraxtAllClaims(String jwtToken) {
+    private Claims extraxtAllClaims(String token) {
         return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(jwtToken)
-                .getBody();
+                .parser()
+                .verifyWith(getSignInKey())
+                .build().parseSignedClaims(token)
+                .getPayload();
     }
 
-    private Key getSignInKey() {
+    private SecretKey getSignInKey() {
         byte[] keyBites = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBites);
+        return new SecretKeySpec(keyBites, "HmacSHA256"); }
     }
-}
+
+
+
 

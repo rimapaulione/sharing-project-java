@@ -65,6 +65,7 @@ public class AuthService {
                 )
         );
 
+
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("User does not exist"));
 
