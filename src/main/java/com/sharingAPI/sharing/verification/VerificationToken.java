@@ -19,7 +19,7 @@ public class VerificationToken {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP(0)")
     private LocalDateTime expires;
 
 }

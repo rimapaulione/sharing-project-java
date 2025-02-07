@@ -1,6 +1,5 @@
 package com.sharingAPI.sharing.config;
 
-
 import com.sharingAPI.sharing.auth.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +24,7 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
 
+//TODO ADD GOOGLE PROVIDER
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
