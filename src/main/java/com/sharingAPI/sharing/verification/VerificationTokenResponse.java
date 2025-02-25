@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class VerificationTokenResponse {
+class VerificationTokenResponse {
     private UUID id;
     private String email;
     private LocalDateTime verified;

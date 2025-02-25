@@ -12,7 +12,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UserController {
+class UserController {
     private final UserService service;
 
     @PatchMapping("/user/change")

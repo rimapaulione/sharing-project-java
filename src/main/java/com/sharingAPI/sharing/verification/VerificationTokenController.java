@@ -10,7 +10,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/verification")
-public class VerificationTokenController {
+class VerificationTokenController {
 
     private final VerificationTokenService verificationTokenService;
     private  final UserRepository userRepository;
