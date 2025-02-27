@@ -12,7 +12,7 @@ import java.util.Optional;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangeNameRequest {
+class ChangeNameRequest {
     private String newFirstName;
     private String newCity;
     private Role role;
